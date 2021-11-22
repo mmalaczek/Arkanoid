@@ -73,7 +73,7 @@ const ballReset = () => {
     playerLives--;
     if (playerLives <= 0) {
         playingGame = false;
-        playerScore = 3;
+        playerLives = 3;
     }
 
     ballSpeedY = 3;
@@ -127,7 +127,8 @@ const ballBrickHandle = () => {
         ballRow >= 0 && ballRow < BRICK_ROWS) {
         if (brickGrid[ballArrIndex]) {
             brickGrid[ballArrIndex] = false;
-            bricksLeft--
+            bricksLeft--;
+            playerScore += 100;
 
             let prevBallX = ballX - ballSpeedX;
             let prevBallY = ballY - ballSpeedY;
@@ -158,6 +159,10 @@ const ballPaddleHandle = () => {
         ballSpeedY = -ballSpeedY;
         let diffX = ballX - (paddle1X + paddleWidth / 2);
         ballSpeedX = diffX * 0.25;
+
+        if (bricksLeft === 0) {
+            brickReset();
+        }
     }
 }
 
@@ -178,7 +183,7 @@ const drawEverything = () => {
 
     if (!playingGame) {
         canvasContext.fillStyle = 'white';
-        canvasContext.fillText('click to play again', 400, 300);
+        canvasContext.fillText('click to play again', 300, 300);
         return;
     }
 
