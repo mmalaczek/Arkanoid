@@ -17,6 +17,7 @@ const BRICK_COLUMNS = 10;
 const BRICK_ROWS = 14;
 
 let playerScore = 0;
+let playerLives = 3;
 
 let mouseX = 0;
 let mouseY = 0;
@@ -69,8 +70,11 @@ const handleMouseClick = () => {
 }
 
 const ballReset = () => {
-    // TODO: ADD 3 LIVES
-    playingGame = false;
+    playerLives--;
+    if (playerLives <= 0) {
+        playingGame = false;
+        playerScore = 3;
+    }
 
     ballSpeedY = 3;
     ballSpeedX = 0;
@@ -187,7 +191,8 @@ const drawEverything = () => {
     canvasContext.font = "23px Arial";
 
     // display player score
-    colorText(playerScore, 700, 50, 'white');
+    colorText(playerScore, 700, 40, 'white');
+    colorText(`Lives: ${playerLives}`, 10, 30, 'white');
 
     drawBricks();
 
